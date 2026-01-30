@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <title>Carte des campus YNOV et autres écoles</title>
+
+  <!-- Leaflet CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    #map {
+      width: 100%;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+  // Initialisation de la carte centrée sur la France
+  const map = L.map('map').setView([46.6, 2.5], 6);
+
+  // Fond de carte OpenStreetMap
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  // MARKERS YNOV (bleu classique)
+  const ynovIcon = L.icon({
+    iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34]
+  });
+
+  // MARKERS AUTRES ÉCOLES (rouge)
+  const redIcon = L.icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34]
+  });
+
+  // Liste des campus YNOV
+  const ynovCampuses = [
+    { name: "Ynov Aix-en-Provence", coords: [43.5297, 5.4474] },
+    { name: "Ynov Bordeaux", coords: [44.8378, -0.5792] },
+    { name: "Ynov Lille", coords: [50.6292, 3.0573] },
+    { name: "Ynov Lyon", coords: [45.7640, 4.8357] },
+    { name: "Ynov Montpellier", coords: [43.6119, 3.8772] },
+    { name: "Ynov Nantes", coords: [47.2184, -1.5536] },
+    { name: "Ynov Paris Ouest – Nanterre", coords: [48.8910, 2.2060] },
+    { name: "Ynov Paris Est – Val d’Europe", coords: [48.8688, 2.7755] },
+    { name: "Ynov Rennes", coords: [48.1173, -1.6778] },
+    { name: "Ynov Rouen", coords: [49.4432, 1.0993] },
+    { name: "Ynov Strasbourg", coords: [48.5734, 7.7521] },
+    { name: "Ynov Sophia Antipolis", coords: [43.6167, 7.0672] },
+    { name: "Ynov Toulouse", coords: [43.6047, 1.4442] }
+  ];
+
+  // Liste des autres écoles (approximatives)
+  const otherSchools = [
+    { name: "EM Normandie", coords: [49.1833, -0.3667] },
+    { name: "ESAIP", coords: [47.2167, -0.5667] },
+    { name: "YSCHOOLS", coords: [47.2184, -1.5536] },
+    { name: "EuraCreative", coords: [50.6333, 3.0667] },
+    { name: "CCIPIDF", coords: [48.8566, 2.3522] },
+    { name: "EXCELIA", coords: [46.1730, -1.1521] },
+    { name: "ESPI", coords: [48.8666, 2.3333] },
+    { name: "MBS", coords: [43.6047, 1.4442] },
+    { name: "ISC Paris", coords: [48.8666, 2.3333] },
+    { name: "ESDES", coords: [45.7550, 4.8350] },
+    { name: "Aivancity", coords: [48.8566, 2.3522] },
+    { name: "ESIEA", coords: [48.8666, 2.3333] },
+    { name: "Clermont School of Business", coords: [45.7833, 3.0833] },
+    { name: "Burgundy School of Business", coords: [47.3216, 5.0415] },
+    { name: "ICN", coords: [49.1167, 6.1833] },
+    { name: "GEM", coords: [45.1885, 5.7245] },
+    { name: "EFREI Paris", coords: [48.7200, 2.4667] }
+  ];
+
+  // Ajout des marqueurs YNOV (bleu)
+  ynovCampuses.forEach(campus => {
+    L.marker(campus.coords, { icon: ynovIcon })
+      .addTo(map)
+      .bindPopup(`<strong>${campus.name}</strong>`);
+  });
+
+  // Ajout des autres écoles (rouge)
+  otherSchools.forEach(school => {
+    L.marker(school.coords, { icon: redIcon })
+      .addTo(map)
+      .bindPopup(`<strong>${school.name}</strong>`);
+  });
+
+</script>
+
+</body>
+</html>
+
